@@ -14,8 +14,10 @@ import {
   faCalendarDays,
   faPerson,
 } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 const Header = ({ type }) => {
+  const [destination, setDestination] = useState("");
   const [openDate, setOpenDate] = useState(false);
   const [date, setDate] = useState([
     {
@@ -30,7 +32,7 @@ const Header = ({ type }) => {
     children: 0,
     room: 1,
   });
-
+  const navigate = useNavigate();
   const handleOption = (name, operation) => {
     setOptions((prev) => {
       return {
@@ -38,6 +40,9 @@ const Header = ({ type }) => {
         [name]: operation === "i" ? options[name] + 1 : options[name] - 1,
       };
     });
+  };
+  const handleSearch = () => {
+    navigate("/hotels", { state: { destination, date, options } });
   };
   return (
     <div className="header">
@@ -83,6 +88,7 @@ const Header = ({ type }) => {
                   type="text"
                   placeholder="Where are you going?"
                   className="headerSearchInput"
+                  onChange={(e) => setDestination(e.target.value)}
                 />
               </div>
               <div className="headerSearchItem">
@@ -91,7 +97,7 @@ const Header = ({ type }) => {
                   onClick={() => setOpenDate(!openDate)}
                   className="headerSearchText"
                 >{`${format(date[0].startDate, "MM/dd/yyyy")} to ${format(
-                  date[0].startDate,
+                  date[0].endDate,
                   "MM/dd/yyyy"
                 )}`}</span>
                 {openDate && (
@@ -99,8 +105,9 @@ const Header = ({ type }) => {
                     editableDateInputs={true}
                     onChange={(item) => setDate([item.selection])}
                     moveRangeOnFirstSelection={false}
-                    ranges={date}
                     className="date"
+                    minDate={new Date()}
+                    ranges={date}
                   />
                 )}
               </div>
@@ -182,7 +189,9 @@ const Header = ({ type }) => {
                 )}
               </div>
               <div className="headerSearchItem">
-                <span className="headerButton">Search</span>
+                <button onClick={handleSearch} className="headerButton">
+                  Search
+                </button>
               </div>
             </div>
           </>
