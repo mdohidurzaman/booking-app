@@ -45,6 +45,7 @@ const Footer = () => {
           <li className="fListItem">Hotels</li>
         </ul>
       </div>
+      <hr className="divider"></hr>
       <div className="fText">Copy right @2022 booking station</div>
     </div>
   );
