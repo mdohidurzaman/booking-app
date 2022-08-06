@@ -1,8 +1,11 @@
 import express from "express";
 import {
+  countByCity,
+  countByType,
   createHotel,
   deleteHotel,
   getHotel,
+  getHotelRooms,
   getHotels,
   updetedHotel,
 } from "../controllers/hotel.js";
@@ -16,7 +19,11 @@ router.put("/:id", verifyAdmin, updetedHotel);
 //DELETE
 router.delete("/:id", verifyAdmin, deleteHotel);
 //GET
-router.get("/:id", getHotel);
+router.get("/find/:id", getHotel);
 //GET ALL
 router.get("/", getHotels);
+router.get("/countByCity", countByCity);
+router.get("/countByType", countByType);
+router.get("/room/:id", getHotelRooms);
+
 export default router;

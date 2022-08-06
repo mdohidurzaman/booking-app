@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cookiePerser from "cookie-parser";
+import cors from "cors";
 import authRoute from "./routes/auth.js";
 import usersRoute from "./routes/users.js";
 import hotelsRoute from "./routes/hotels.js";
@@ -22,6 +23,7 @@ mongoose.connection.on("Disconnection mongoDB", () => {
 });
 
 //Middle ware
+app.use(cors());
 app.use(cookiePerser());
 app.use(express.json());
 
